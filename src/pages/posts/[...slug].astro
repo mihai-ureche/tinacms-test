@@ -1,9 +1,10 @@
 ---
 import client from "../../../tina/__generated__/client";
+import { tinaFieldToHTML } from "../../utils/tina-helper";
 
 export async function getStaticPaths() {
   const posts = await client.queries.postConnection();
-  
+
   return posts.data.postConnection.edges?.map((post) => {
     return {
       params: { slug: post?.node?._sys.filename },
@@ -13,6 +14,7 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
+const bodyHTML = post?.body ? tinaFieldToHTML(post.body) : "";
 ---
 
 <!doctype html>
@@ -20,12 +22,12 @@ const { post } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>{post.title}</title>
+    <title>{post?.title}</title>
   </head>
   <body>
     <main>
-      <h1>{post.title}</h1>
-      <div set:html={post.body} />
+      <h1>{post?.title}</h1>
+      <div set:html={bodyHTML} />
       <a href="/">← Back to home</a>
     </main>
   </body>
