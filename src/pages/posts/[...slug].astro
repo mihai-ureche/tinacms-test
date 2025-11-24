@@ -1,0 +1,53 @@
+---
+import client from "../../../tina/__generated__/client";
+
+export async function getStaticPaths() {
+  const posts = await client.queries.postConnection();
+  
+  return posts.data.postConnection.edges?.map((post) => {
+    return {
+      params: { slug: post?.node?._sys.filename },
+      props: { post: post?.node },
+    };
+  });
+}
+
+const { post } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{post.title}</title>
+  </head>
+  <body>
+    <main>
+      <h1>{post.title}</h1>
+      <div set:html={post.body} />
+      <a href="/">← Back to home</a>
+    </main>
+  </body>
+</html>
+
+<style>
+  main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  h1 {
+    color: #333;
+    margin-bottom: 2rem;
+  }
+  a {
+    display: inline-block;
+    margin-top: 2rem;
+    color: #0066cc;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+</style>

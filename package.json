@@ -1,0 +1,19 @@
+{
+  "name": "tinacms-test",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "tinacms dev -c \"astro dev\"",
+    "build": "tinacms build && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@tinacms/cli": "^1.12.4",
+    "astro": "^5.16.0",
+    "tinacms": "^2.9.5"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1"
+  }
+}
